@@ -21,8 +21,15 @@ function getSearch(search) {
       return response.json();
     })
     .then(function(body) {
-      const imgLink = body.results[0].urls.regular;
-      createImageNode(imgLink);
+      let imgLinks = [];
+      for (let i = 0; i <= 8; i++) {
+        imgLinks.push(body.results[i].urls.regular);
+      }
+      console.log(imgLinks);
+      //const imgLinks = body.results.urls.regular
+      const mainImg = imgLinks[0];
+      createImageNode(mainImg);
+      createThumbNailNodes(imgLinks);
     });
 }
 
@@ -44,4 +51,14 @@ searchSubmit.addEventListener("submit", function(searchEvent) {
   loadAPI(searchInput.value);
 });
 
+function createThumbNailNodes(thumbnails) {
+  const divNodes = document.querySelector(".thumbs");
+  thumbnails.forEach(thumb => {
+    const thumbnail = document.createElement("img");
+    thumbnail.setAttribute("src", thumb);
+    divNodes.appendChild(thumbnail);
+  });
+}
+
+// fetch load API for first load.
 loadAPI();
