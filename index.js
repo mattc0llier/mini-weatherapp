@@ -1,5 +1,4 @@
 function loadAPI(searchQuery) {
-  figureNode.innerHTML = "";
   if (searchQuery === undefined) {
     searchQuery = "london";
   }
@@ -22,7 +21,7 @@ function getSearch(search) {
     })
     .then(function(body) {
       let imgLinks = [];
-      for (let i = 0; i <= 8; i++) {
+      for (let i = 0; i <= 9; i++) {
         imgLinks.push(body.results[i].urls.regular);
       }
       console.log(imgLinks);
@@ -36,6 +35,7 @@ function getSearch(search) {
 const figureNode = document.querySelector(".photo");
 
 function createImageNode(imgUrl) {
+  figureNode.innerHTML = "";
   const imgNode = document.createElement("img");
   imgNode.setAttribute("src", imgUrl);
 
@@ -53,12 +53,30 @@ searchSubmit.addEventListener("submit", function(searchEvent) {
 
 function createThumbNailNodes(thumbnails) {
   const divNodes = document.querySelector(".thumbs");
+  divNodes.innerHTML = "";
   thumbnails.forEach(thumb => {
     const thumbnail = document.createElement("img");
     thumbnail.setAttribute("src", thumb);
+    thumbnail.className = "thumb";
     divNodes.appendChild(thumbnail);
   });
 }
+
+const thumbNode = document.querySelector(".thumbs");
+thumbNode.addEventListener("click", function(thumbClick) {
+  createImageNode(thumbClick.target.currentSrc);
+  thumbClick.target.classList.toggle(".thumb--open");
+  console.log(thumbClick.target);
+});
+//
+// const thumbnailNode = document.querySelectorAll(".thumb");
+//
+//
+// toggle.addEventListener("click", function(event) {
+//   // toggle will add the specified class to element if it's not there already
+//   // or remove it if the element already has it
+//   event.classList.toggle(".thumb--open");
+// });
 
 // fetch load API for first load.
 loadAPI();

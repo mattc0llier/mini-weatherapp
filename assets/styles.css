@@ -80,7 +80,6 @@
 ------------------------------------------------------------------------------*/
 .thumbs {
   display: flex;
-  justify-content: space-around;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
 
@@ -103,10 +102,14 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-.thumb.active,
+.thumb--open {
+  outline: 1px solid red;
+}
+
+.thumb:active,
+.thumb:visited,
 .thumb:hover,
 .thumb:focus {
-  outline: 1px solid white;
 }
 
 .thumb {
