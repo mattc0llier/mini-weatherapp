@@ -22,11 +22,14 @@ function getSearch(search) {
     .then(function(body) {
       let imgLinks = [];
       for (let i = 0; i <= 9; i++) {
-        imgLinks.push(body.results[i].urls.regular);
+        imgLinks.push({
+          img: body.results[i].urls.regular,
+          id: body.results[i].id
+        });
       }
       console.log(imgLinks);
       //const imgLinks = body.results.urls.regular
-      const mainImg = imgLinks[0];
+      const mainImg = imgLinks[0].img;
       createImageNode(mainImg);
       createThumbNailNodes(imgLinks);
     });
@@ -56,7 +59,8 @@ function createThumbNailNodes(thumbnails) {
   divNodes.innerHTML = "";
   thumbnails.forEach(thumb => {
     const thumbnail = document.createElement("img");
-    thumbnail.setAttribute("src", thumb);
+    thumbnail.setAttribute("src", thumb.img);
+    thumbnail.setAttribute("id", thumb.id);
     thumbnail.className = "thumb";
     divNodes.appendChild(thumbnail);
   });
@@ -64,9 +68,18 @@ function createThumbNailNodes(thumbnails) {
 
 const thumbNode = document.querySelector(".thumbs");
 thumbNode.addEventListener("click", function(thumbClick) {
-  createImageNode(thumbClick.target.currentSrc);
-  thumbClick.target.classList.toggle(".thumb--open");
-  console.log(thumbClick.target);
+  //thumbClick.target.classList.toggle("active");
+  const updatedFig = document.querySelector(".photo");
+  //Does the thumbnail clicked match the currently displayed image?
+  if (thumbClick.target.currentSrc != updatedFig.firstChild.src) {
+    let oldImg = document.querySelector(".active");
+    if (oldImg !== null) {
+      oldImg.classList.toggle("active");
+    }
+    thumbClick.target.classList.toggle("active");
+    createImageNode(thumbClick.target.currentSrc);
+    console.log(oldImg);
+  }
 });
 //
 // const thumbnailNode = document.querySelectorAll(".thumb");

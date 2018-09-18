@@ -102,14 +102,11 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-.thumb--open {
-  outline: 1px solid red;
-}
-
-.thumb:active,
+.thumb.active,
 .thumb:visited,
 .thumb:hover,
 .thumb:focus {
+  outline: 3px solid white;
 }
 
 .thumb {
